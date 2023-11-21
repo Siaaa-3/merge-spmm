@@ -126,7 +126,7 @@ namespace backend
       int   col = -1;
       float val = 0.f;
       float sum = 0.f;
-      int   jj  = row_start+lane_id;
+      int   jj  = row_start+lane_id; 
 
       //TODO: add popc() and ballot to query which to shfl
       if( blockIdx.y!=gridDim.y-1 )
@@ -153,7 +153,7 @@ namespace backend
             #pragma unroll
             for( int ii=0; ii<TB; ii++ )
             {
-              col_all[ii] = __shfl(col, ii+kk);
+              col_all[ii] = __shfl(col, ii+kk); // 将laneid为ii+kk的线程中的col值广播并返回
               val_all[ii] = __shfl(val, ii+kk);
               //sum        += val_all[ii]*__ldg(B_offset+col_all[ii]);
               vals[   ii] = val_all[ii]*__ldg(B_offset+col_all[ii]);
